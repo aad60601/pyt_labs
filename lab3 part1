@@ -1,0 +1,62 @@
+01_inhabitants.py
+import room_1, room_2
+print(f'В комнате room_1 живут:{room_1.folks[0]} и {room_1.folks[1]}')
+print(f'В комнате room_2 живёт:{room_2.folks[0]}')
+
+02_district.py
+import district
+#from district import *
+#from district.central_street import *
+#from district.soviet_street import *
+#from district.soviet_street.house1 import *
+#from district import central_street, soviet_street
+a = district.central_street.house1.room1.folks + district.central_street.house1.room2.folks + district.central_street.house2.room1.folks + district.central_street.house2.room2.folks
+f = district.soviet_street.house1.room1.folks + district.soviet_street.house1.room2.folks + district.soviet_street.house2.room1.folks + district.soviet_street.house2.room2.folks
+
+print(f'На районе живут:{",".join(a) + ",".join(f)}')
+# в каждом ините написать что именно нужно импортировать
+
+03_burger
+import my_burger
+my_burger.ing1(2)
+my_burger.ing5(2)
+my_burger.ing2(1)
+my_burger.ing6(2)
+my_burger.ing2(1)
+my_burger.ing6(2)
+my_burger.ing4(2)
+my_burger.ing3(4)
+print('Ваш двойной чизбургер, готов!\n')
+# Создать рецепт своего бургера, по вашему вкусу.
+# Если не хватает ингридиентов - создать соответствующие функции в модуле my_burger
+my_burger.ing1(2)
+my_burger.ing8(2)
+my_burger.ing5(2)
+my_burger.ing6(2)
+my_burger.ing2(1)
+my_burger.ing7(2)
+my_burger.ing4(2)
+my_burger.ing3(4)
+print('Рецепт моего любимого бургера!')
+# модуль из которого брались функции
+def ing1(bun):
+    print (f'А теперь добавим:{bun} булочки')
+
+def ing2(cutlets):
+    print (f'А теперь добавим:{cutlets} котлету')
+
+def ing3(cucumbers):
+    print (f'А теперь добавим:{cucumbers} огурчика')
+
+def ing4(tomato):
+    print (f'А теперь добавим:{tomato} помидорки')
+
+def ing5(mayonnaise):
+    print (f'А теперь добавим:{mayonnaise} ложки майонеза')
+
+def ing6(cheese):
+    print (f'А теперь добавим:{cheese} ломтика сыра')
+def ing7(becon):
+    print (f'А теперь добавим:{becon} ломтика бекона')
+def ing8(ketchup):
+    print (f'А теперь добавим:{ketchup} ложки кетчупа')
