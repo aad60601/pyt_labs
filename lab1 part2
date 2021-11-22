@@ -1,0 +1,196 @@
+00_distance.py
+# Есть словарь координат городов
+
+sites = {
+    'Moscow': (550, 370),
+    'London': (510, 510),
+    'Paris': (480, 480),
+}
+
+# Составим словарь словарей расстояний между ними
+# расстояние на координатной сетке - ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+
+def dist(x, y):
+    return ((x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2) ** 0.5
+distances = {'Moscow - London': dist(sites['Moscow'], sites['London']),
+            'London - Paris': dist(sites['London'], sites['Paris']),
+            'Moscow - Paris': dist(sites['Moscow'], sites['Paris'])}
+print(distances)
+
+01_circle.py
+radius = 42
+
+# Выведите на консоль значение прощади этого круга с точностю до 4-х знаков после запятой
+# подсказки:
+#       формулу можно подсмотреть в интернете,
+#       пи возьмите равным 3.1415926
+#       точность указывается в функции round()
+# TODO здесь ваш код
+
+pi = 3.1415926
+print(round(pi*radius**2,4))
+# Далее, пусть есть координаты точки
+point_1 = (23, 34)
+# где 23 - координата х, 34 - координата у
+
+# Если точка point лежит внутри того самого круга [центр в начале координат (0, 0), radius = 42],
+# то выведите на консоль True, Или False, если точка лежит вовне круга.
+# подсказки:
+#       нужно определить расстояние от этой точки до начала координат (0, 0)
+#       формула так же есть в интернете
+#       квадратный корень - это возведение в степень 0.5
+#       операции сравнения дают булевы константы True и False
+# TODO здесь ваш код
+distance = round(((0-point_1[0])**2+(0-point_1[1])**2)**0.5, 2)
+print(distance <= radius)
+# Аналогично для другой точки
+point_2 = (30, 30)
+# Если точка point_2 лежит внутри круга (radius = 42), то выведите на консоль True,
+# Или False, если точка лежит вовне круга.
+# TODO здесь ваш код
+distance = round(((0-point_2[0])**2+(0-point_2[1])**2)**0.5, 2)
+print(distance <= radius)
+
+03_favourite_movies.py
+my_favorite_movies = 'Терминатор, Пятый элемент, Аватар, Чужие, Назад в будущее'
+print(my_favorite_movies[0:10])
+print(my_favorite_movies[-15:])
+print(my_favorite_movies[12:25])
+print(my_favorite_movies[-22:-17])
+
+05_zoo.py
+ есть список животных в зоопарке
+
+zoo = ['lion', 'kangaroo', 'elephant', 'monkey', ]
+
+# посадите медведя (bear) между львом и кенгуру
+#  и выведите список на консоль
+zoo.insert(2,'bear')
+print(zoo)
+
+# добавьте птиц из списка birds в последние клетки зоопарка
+birds = ['rooster', 'ostrich', 'lark', ]
+#  и выведите список на консоль
+zoo.extend(birds)
+print(zoo)
+
+# уберите слона
+#  и выведите список на консоль
+zoo.remove('elephant')
+print(zoo)
+
+# выведите на консоль в какой клетке сидит лев (lion) и жаворонок (lark).
+# Номера при выводе должны быть понятны простому человеку, не программисту.
+print(zoo.index('lion')+1)
+print(zoo.index('lark')+1)
+
+06_songs_list.py
+violator_songs_dict = {
+    'World in My Eyes': 4.76,
+    'Sweetest Perfection': 4.43,
+    'Personal Jesus': 4.56,
+    'Halo': 4.30,
+    'Waiting for the Night': 6.07,
+    'Enjoy the Silence': 4.6,
+    'Policy of Truth': 4.88,
+    'Blue Dress': 4.18,
+    'Clean': 5.68,
+}
+
+# распечатайте общее время звучания трех песен: 'Sweetest Perfection', 'Policy of Truth' и 'Blue Dress'
+#   А другие три песни звучат ХХХ минут
+
+# TODO здесь ваш код
+variable1 = 0
+for i in violator_songs_list:
+    #print(i[0])
+    if i[0] == 'Sweetest Perfection':
+        variable1 += i[1]
+    elif i[0] == 'Policy of Truth':
+        variable1 += i[1]
+    elif i[0] == 'Blue Dress':
+        variable1 += i[1]
+print(f"А другие три песни звучат {round(variable1, 2)} минут")
+
+07_secret.py
+print(secret_message[0][3], secret_message[1][9:13], secret_message[2][5:15:2], secret_message[3][12:6:-1], secret_message[4][20:15:-1])
+
+08_garden.py
+# в саду сорвали цветы
+garden = ('ромашка', 'роза', 'одуванчик', 'ромашка', 'гладиолус', 'подсолнух', 'роза', )
+
+# на лугу сорвали цветы
+meadow = ('клевер', 'одуванчик', 'ромашка', 'клевер', 'мак', 'одуванчик', 'ромашка', )
+
+# создайте множество цветов, произрастающих в саду и на лугу
+# garden_set =
+# meadow_set =
+garden_set = set(garden)
+meadow_set = set(meadow)
+
+# выведите на консоль все виды цветов
+print(garden_set.union(meadow_set))
+
+# выведите на консоль те, которые растут и там и там
+print(garden_set & meadow_set)
+
+# выведите на консоль те, которые растут в саду, но не растут на лугу
+print(garden_set.difference(meadow_set))
+
+# выведите на консоль те, которые растут на лугу, но не растут в саду
+print(meadow_set.difference(garden_set))
+
+09_shopping.py
+# Создайте словарь цен на продкты следующего вида (писать прямо в коде)
+sweets = {
+    'печенье': [
+        {'shop': 'ашан', 'price': 10.99},
+        {'shop': 'пятерочка', 'price': 9.99}
+    ],
+    'конфеты': [
+        {'shop': 'пятерочка', 'price': 32.99},
+        {'shop': 'магнит', 'price': 30.99}
+    ],
+    'карамель': [
+        {'shop': 'ашан', 'price': 45.99},
+        {'shop': 'магнит', 'price': 41.99}
+    ],
+    'пирожное': [
+        {'shop': 'пятерочка', 'price': 59.99},
+        {'shop': 'магнит', 'price': 62.99}
+    ]
+}
+print(sweets)
+
+10_store.py
+table_quantity  = store[goods['Стол']][0]['quantity']
+table_quantity1 = store[goods['Стол']][1]['quantity']
+table_price = store[goods['Стол']][0]['price']
+table_price1 = store[goods['Стол']][1]['price']
+#print(table_quantity, table_price, table_quantity1, table_price1)
+
+table_cost = table_quantity * table_price + table_quantity1 * table_price1
+print('Стол -', table_quantity+table_quantity1, 'шт, стоимость', table_cost, 'руб')
+
+
+
+sofa_quantity  = store[goods['Диван']][0]['quantity']
+sofa_quantity1 = store[goods['Диван']][1]['quantity']
+sofa_price = store[goods['Диван']][0]['price']
+sofa_price1 = store[goods['Диван']][1]['price']
+#print(sofa_quantity, sofa_price, sofa_quantity1, sofa_price1)
+
+sofa_cost = sofa_quantity * sofa_price + sofa_quantity1 * sofa_price1
+print('Диван -', sofa_quantity+sofa_quantity1, 'шт, стоимость', sofa_cost, 'руб')
+
+chair_quantity  = store[goods['Стул']][0]['quantity']
+chair_quantity1 = store[goods['Стул']][1]['quantity']
+chair_quantity2 = store[goods['Стул']][2]['quantity']
+chair_price = store[goods['Стул']][0]['price']
+chair_price1 = store[goods['Стул']][1]['price']
+chair_price2 = store[goods['Стул']][2]['price']
+print(chair_quantity, chair_price, chair_quantity1, chair_price1,chair_quantity2, chair_price2)
+
+chair_cost = chair_quantity * chair_price + chair_quantity1 * chair_price1 + chair_quantity2 * chair_price2
+print('Стул -', chair_quantity+chair_quantity1+chair_quantity2, 'шт, стоимость', chair_cost, 'руб')
+
