@@ -21,13 +21,13 @@ def num_eights(x):
     True
     """
 
-    "*** YOUR CODE HERE ***"
-    if (x // 10 == 8):
-        return 1 + num_eights(x//10)
-    elif (x % 10 != 8):
-        return x//10
-    else:
+    if x % 10 == 8:
+       return 1 + num_eights(x // 10)
+    elif x < 10:
         return 0
+    else:
+        return num_eights(x // 10)
+
 
 def pingpong(n):
     """Возвращает n-ый элемент пинг-понг последовательности.
@@ -61,8 +61,6 @@ def pingpong(n):
     0
     >>> pingpong(81)
     1
-    >>> pingpong(82)
-    0
     >>> pingpong(100)
     -6
     >>> from construct_check import check
@@ -72,6 +70,16 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def flag(x):
+        if x == 1:
+            return 1
+        if num_eights(x) or x % 8 == 0:
+            return -flag(x - 1)
+        return flag(x - 1)
+    if n == 1:
+        return 1
+
+    return pingpong(n - 1) + flag(n - 1)
 
 
 def missing_digits(n):
@@ -101,7 +109,12 @@ def missing_digits(n):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    if n < 10:
+        return 0
+    elif n % 10 - n // 10 % 10 - 1 == -1:
+        return missing_digits(n // 10)
+    else:
+        return n % 10 - n // 10 % 10 - 1 + missing_digits(n//10)
 
 def next_largest_coin(coin):
     """Возвращает следующую монету.
@@ -147,6 +160,17 @@ def count_coins(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helpp (n, size):
+        if n < 4:
+            return 1
+        elif (n < 0) or (size > n) or (size == None):
+            return 0
+        else:
+            if size == 25:
+                print (25)
+            return helpp(n - next_largest_coin(size), size) + helpp(n, next_largest_coin(size))
+    return helpp (total, 1)
+
 
 
 from operator import sub, mul
@@ -161,4 +185,5 @@ def make_anonymous_factorial():
     >>> check(LAB_SOURCE_FILE, 'make_anonymous_factorial', ['Assign', 'AugAssign', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
+    return (lambda f: lambda k: f(f, k))(lambda f, k: k if k == 1 else mul(k, f(f, sub(k, 1))))
+
