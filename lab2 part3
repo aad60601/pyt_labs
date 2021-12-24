@@ -66,16 +66,12 @@ def paths(m, n):
     >>> paths(1, 157)
     1
     """
-    "*** YOUR CODE HERE ***"
     if m == 1 and n == 1:
         return 1
-    # we're at the right edge
     elif m == 1:
         return paths(m, n-1)
-    # we're at the lower edge
     elif n == 1:
         return paths(m-1, n )
-    # two directions possible, right ( m-1) and down ( n-1 )
     else:
         return paths(m-1, n ) + paths(m, n-1 )
 
@@ -129,12 +125,12 @@ def max_subseq(n, t):
     "*** YOUR CODE HERE ***"
     if n == 0 or t == 0:
         return 0
-    with_ones = max_subseq(n//10, t-1) * 10 + n%10
-    not_with = max_subseq(n//10, t)
-    if with_ones > not_with:
-        return with_ones
+    l = max_subseq(n//10, t-1) * 10 + n%10
+    p = max_subseq(n//10, t)
+    if l > p:
+        return l
     else:
-        return not_with
+        return p
 
 def add_chars(w1, w2):
     """
