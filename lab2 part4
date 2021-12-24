@@ -1,0 +1,292 @@
+01_shapes.py
+def triangle(point, angle, length):
+    for _ in range(3):
+        v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+        v1.draw()
+        angle = angle + 120
+        point = v1.end_point
+
+
+def square(point, angle, length):
+    for _ in range(4):
+        v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+        v1.draw()
+        angle = angle + 90
+        point = v1.end_point
+
+def pentagon(point, angle, length):
+    for count in range(4):
+        count += 1
+        v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+        v1.draw()
+        if count == 1:
+            v2 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+        if count == 4:
+            sd.line(start_point=v1.end_point, end_point=v2.start_point, width=3)
+        angle = angle + 70
+        point = v1.end_point
+
+def hexagon(point, angle, length):
+    for count in range(5):
+        count += 1
+        v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+        v1.draw()
+        if count == 1:
+            v2 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+        if count == 5:
+            sd.line(start_point=v1.end_point, end_point=v2.start_point, width=3)
+        angle = angle + 60
+        point = v1.end_point
+
+point_triangle = sd.get_point(100, 100)
+triangle(point=point_triangle, angle=50, length=150)
+
+point_square = sd.get_point(400, 100)
+square(point=point_square, angle=20, length=150)
+
+point_pentagon = sd.get_point(100, 350)
+pentagon(point=point_pentagon, angle=20, length=100)
+
+point_hexagon = sd.get_point(400, 350)
+hexagon(point=point_hexagon, angle=20, length=100)
+
+sd.pause()
+
+# Часть 1-бис.
+# Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
+# Скажем, связывать точки не линиями, а дугами. Или двойными линиями. Или рисовать круги в угловых точках. Или...
+# А если таких функций не 4, а 44? Код писать не нужно, просто представь объем работы... и запомни это.
+
+# Часть 2 (делается после зачета первой части)
+#
+# Надо сформировать функцию, параметризированную в местах где была "небольшая правка".
+# Это называется "Выделить общую часть алгоритма в отдельную функцию"
+# Потом надо изменить функции рисования конкретных фигур - вызывать общую функцию вместо "почти" одинакового кода.
+#
+# В итоге должно получиться:
+#   - одна общая функция со множеством параметров,
+#   - все функции отрисовки треугольника/квадрата/етс берут 3 параметра и внутри себя ВЫЗЫВАЮТ общую функцию.
+#
+# Не забудте в этой общей функции придумать, как устранить разрыв в начальной/конечной точках рисуемой фигуры
+# (если он есть. подсказка - на последней итерации можно использовать линию от первой точки)
+
+# Часть 2-бис.
+# А теперь - сколько надо работы что бы внести изменения в код? Выгода на лицо :)
+# Поэтому среди программистов есть принцип D.R.Y. https://clck.ru/GEsA9
+# Будьте ленивыми, не используйте копи-пасту!
+def vector(vector_start, length, angle):
+    v = sd.get_vector(vector_start, angle, length)
+    return v.end_point
+
+
+def polygon(point, heads, length):
+    angle = 0
+    angle_start = 15
+    angle_polygon = 360 / heads
+    point_polygon = point
+    for _ in range(heads):
+        if _ == 0:
+            angle = angle_start
+        else:
+            angle += angle_polygon
+        if _ < (heads - 1):
+            end_point = vector(point, length, angle)
+        else:
+            end_point = point_polygon
+        sd.line(start_point=point, end_point=end_point, color=sd.COLOR_YELLOW, width=1)
+        point = end_point
+        # t2 = sd.get_vector(t1.end_point, angle + 120, length, 5)
+        # sd.line(start_point=t1.end_point, end_point=t2.end_point, color=sd.COLOR_YELLOW, width=1)
+        # sd.line(start_point=t2.end_point, end_point=point, color=sd.COLOR_YELLOW, width=1)
+
+
+# (point_start_x, point_start_y, length_start, type_of_polygon)
+start_point = [(100, 100, 150, 3), (350, 100, 150, 4), (100, 350, 100, 5), (350, 350, 100, 6)]
+
+for _ in start_point:
+    point_start = sd.get_point(_[0], _[1])
+    length_start = _[2]
+    heads_start = _[3]
+    polygon(point_start, heads_start, length_start)
+sd.pause()
+
+02_global_color.py
+import simple_draw as sd
+
+# Добавить цвет в функции рисования геом. фигур. из упр lesson_004/01_shapes.py
+# (код функций скопировать сюда и изменить)
+# Запросить у пользователя цвет фигуры посредством выбора из существующих:
+#   вывести список всех цветов с номерами и ждать ввода номера желаемого цвета.
+# Потом нарисовать все фигуры этим цветом
+
+# Пригодятся функции
+# sd.get_point()
+# sd.line()
+# sd.get_vector()
+# и константы COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE
+# Результат решения см lesson_004/results/exercise_02_global_color.jpg
+color_rainbow = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN,
+                 sd.COLOR_CYAN, sd.COLOR_BLUE, sd.COLOR_PURPLE)
+
+
+def vector(vector_start, length, angle):
+    v = sd.get_vector(vector_start, angle, length)
+    return v.end_point
+
+
+def polygon(point, heads, length, color):
+    angle = 0
+    angle_start = 15
+    angle_polygon = 360 / heads
+    point_polygon = point
+    color_paint = color_rainbow[color - 1]
+    for _ in range(heads):
+        if _ == 0:
+            angle = angle_start
+        else:
+            angle += angle_polygon
+        if _ < (heads - 1):
+            end_point = vector(point, length, angle)
+        else:
+            end_point = point_polygon
+        sd.line(start_point=point, end_point=end_point, color=color_paint, width=1)
+        point = end_point
+
+
+# (point_start_x, point_start_y, length_start, type_of_polygon)
+start_point = [(100, 100, 150, 3), (400, 100, 150, 4), (100, 350, 100, 5), (400, 350, 100, 6)]
+color_input = 1
+
+while color_input:
+    color_input = input('Возможные цвета:\n'
+                        '   0: Выход из программы.\n'
+                        '   1: Красный\n'
+                        '   2: Оранжевый\n'
+                        '   3: Жёлтый\n'
+                        '   4: Зелёный\n'
+                        '   5: Голубой\n'
+                        '   6: Синий\n'
+                        '   7: фиолетовый\n')
+    if color_input.isnumeric():
+        color_input = int(color_input)
+        if color_input == 0:
+            break
+        elif color_input < 0 or color_input > 7:
+            print('Неверный ввод')
+            continue
+    else:
+        print('Неверный ввод')
+        continue
+    for _ in start_point:
+        point_start = sd.get_point(_[0], _[1])
+        length_start = _[2]
+        heads_start = _[3]
+        polygon(point_start, heads_start, length_start, color_input)
+    break
+sd.pause()
+
+
+03_shape_select.py
+# -*- coding: utf-8 -*-
+from math import sin, radians
+import simple_draw as sd
+
+# Запросить у пользователя желаемую фигуру посредством выбора из существующих
+#   вывести список всех фигур с номерами и ждать ввода номера желаемой фигуры.
+# и нарисовать эту фигуру в центре экрана
+
+# Код функций из упр 02_global_color.py скопировать сюда
+# Результат решения см results/exercise_03_shape_select.jpg
+
+# TODO здесь ваш код
+def vector(vector_start, length, angle):
+    v = sd.get_vector(vector_start, angle, length)
+    return v.end_point
+
+
+def polygon(heads, color):
+    color_rainbow = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN,
+                     sd.COLOR_CYAN, sd.COLOR_BLUE, sd.COLOR_PURPLE)
+    length = 150
+    center = sd.get_point(300, 300)
+    angle = 0
+    angle_start = 0
+    angle_polygon = 360 / heads
+    angle_center = angle_polygon / 2
+    radius = length / (2 * sin(radians(angle_center)))
+    point = vector(center, radius, -(90 + angle_center))
+    point_polygon = point
+    color_paint = color_rainbow[color - 1]
+    sd.circle(center_position=center, radius=2, color=color_rainbow[0], width=1)
+    for _ in range(heads):
+        if _ == 0:
+            angle = angle_start
+        else:
+            angle += angle_polygon
+        if _ < (heads - 1):
+            end_point = vector(point, length, angle)
+        else:
+            end_point = point_polygon
+        sd.line(start_point=point, end_point=end_point, color=color_paint, width=1)
+        point = end_point
+
+
+color_input = 1
+
+while color_input:
+    color_input = input('Возможные цвета:\n'
+                        '   0: Выход из программы.\n'
+                        '   1: Красный\n'
+                        '   2: Оранжевый\n'
+                        '   3: Жёлтый\n'
+                        '   4: Зелёный\n'
+                        '   5: Голубой\n'
+                        '   6: Синий\n'
+                        '   7: фиолетовый\n')
+    if color_input.isnumeric():
+        color_input = int(color_input)
+        if color_input == 0:
+            break
+        elif color_input < 0 or color_input > 7:
+            print('Неверный ввод')
+            continue
+    else:
+        print('Неверный ввод')
+        continue
+    heads_start = input('Введите количество вершин многоугольника:\n')
+    if heads_start.isnumeric():
+        heads_start = int(heads_start)
+        if heads_start < 3:
+            print('Построение многоугольника невозвожно!')
+            continue
+    else:
+        print('Неверный ввод')
+        continue
+    polygon(heads_start, color_input)
+    break
+sd.pause()
+
+04_fractal.py
+def draw_bunches(point_start, angle_start, length_start):
+    if length_start < 5:
+        return
+    angle_list = (-30, 30)
+    for angle_delta in angle_list:
+        angle_random = sd.random_number(-12, 12)
+        angle = angle_start + angle_delta + angle_random
+        # print(angle_random)
+        point_end_f = sd.get_vector(point_start, angle, length_start).end_point
+        sd.line(start_point=point_start, end_point=point_end_f, color=sd.COLOR_YELLOW, width=1)
+        length_random = sd.random_number(-15, 15) / 100
+        # print(length_random)
+        draw_bunches(point_end_f, angle, length_start * (.75 + length_random))
+
+
+angle_root = 90
+length_root = 100
+point_root = sd.get_point(300, 0)
+point_end = sd.get_vector(point_root, angle_root, length_root/2).end_point
+sd.line(start_point=point_root, end_point=point_end, color=sd.COLOR_YELLOW, width=1)
+draw_bunches(point_end, angle_root, length_root)
+
+sd.pause()
