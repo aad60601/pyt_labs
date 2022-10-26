@@ -4,6 +4,7 @@ from toga.style import Pack
 from toga import validators
 import packages
 from packages import proton, electron, neitron
+
 class TextInputApp(toga.App):
     def do_extract_values(self, widget, **kwargs):
         self.text_electp_input.enabled = False
@@ -18,16 +19,21 @@ class TextInputApp(toga.App):
         m = float(self.text_electm_input.value)
         c = float(self.text_electc_input.value)
         p = float(self.text_electp_input.value)
-        self.text_label_el.text = "Рассчитанная комтоновская длина волны для электрона: {}".format(packages.electron.elec(p, m , c))
+        self.result1 = str(packages.electron.elec(p, m , c))
+        self.text_label_el.text = f'Рассчитанная комтоновская длина волны для электрона:{self.result1}'
+        #self.text_result_elec.value = str(packages.electron.elec(p, m , c))
         m = float(self.text_protonm_input.value)
         c = float(self.text_protonc_input.value)
         p = float(self.text_protonp_input.value)
-        self.text_label_pr.text = "Рассчитанная комтоновская длина волны для протона: {}".format(packages.proton.prot(p, m , c))
+        self.result2 = str(packages.proton.prot(p, m , c))
+        self.text_label_pr.text = f'{self.result2}'
+        #self.text_result_prot.value = str(packages.proton.prot(p, m , c))
         m = float(self.text_neitronm_input.value)
         c = float(self.text_neitronc_input.value)
         p = float(self.text_neitronp_input.value)
-        self.text_label_nt.text = "Рассчитанная комтоновская длина волны для нейтрона: {}".format(packages.neitron.neitr(p, m , c))
-
+        self.result3= str(packages.neitron.neitr(p, m , c))
+        self.text_label_nt.text = f"Рассчитанная комтоновская длина волны для нейтрона:{self.result3}"
+        #self.text_result_neitr.value = str(packages.neitron.neitr(p, m , c))
         self.label_el.text = 'Counting down from 5...'
         yield 1
         self.label_el.text = 'Counting down from 4...'
@@ -38,7 +44,7 @@ class TextInputApp(toga.App):
         yield 1
         self.label_el.text = 'Counting down from 1...'
         yield 1
-        self.label_el.text = 'Enter some values and press extract.'
+        self.label_el.text = 'Можете ввести другие значения'
 
         # Renable the inputs again.
         self.text_electm_input.enabled = True
@@ -50,6 +56,9 @@ class TextInputApp(toga.App):
         self.text_neitronp_input.enabled = True
         self.text_neitronm_input.enabled = True
         self.text_neitronc_input.enabled = True
+
+        self.save = packages.SaveCha()
+        self.save.SaveChan(self.result1,self.result2, self.result3)
     def startup(self):
         self.main_window = toga.MainWindow(title=self.name)
         self.label_el = toga.Label(
@@ -73,12 +82,19 @@ class TextInputApp(toga.App):
         self.text_neitronp_input = toga.TextInput(style=Pack(padding=10), placeholder = 'Постоянная планка нейтрона')
         self.text_neitronc_input = toga.TextInput(style=Pack(padding=10), placeholder = 'Скорость света')
         self.text_neitronm_input = toga.TextInput(style=Pack(padding=10), placeholder = 'Масса нейтрона')
+        #self.text_result_elec = toga.TextInput(readonly = True,style=Pack(padding=10), placeholder = 'Результат электрона')
+        #self.text_result_prot = toga.TextInput(readonly = True, style=Pack(padding=10), placeholder = 'Результат протона')
+        #self.text_result_neitr = toga.TextInput(readonly = True,style=Pack(padding=10), placeholder = 'Результат нейтрона')
+
+
         btn_extract = toga.Button(
-            'Nazhmi',
+            'Рассчитать',
             on_press=self.do_extract_values,
             style=Pack(flex=1),
         )
-
+        #self.a = float(format(packages.electron.elec(p, m ,c )))
+        #self.b = float(format(packages.proton.prot(p, m , c)))
+        #self.c = float(format(packages.neitron.neitr(p, m , c)))
         box = toga.Box(
             children=[
                 self.label_el,
@@ -94,8 +110,11 @@ class TextInputApp(toga.App):
                 self.text_neitronp_input,
                 self.text_neitronc_input,
                 self.text_label_el,
+                #self.text_result_elec,
                 self.text_label_pr,
+                #self.text_result_prot,
                 self.text_label_nt,
+                #self.text_result_neitr,
                 btn_extract,
             ],
             style=Pack(
